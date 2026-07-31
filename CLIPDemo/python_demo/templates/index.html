@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CLIP OK Cache Demo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div>
+          <h1>CLIP OK Cache Demo</h1>
+          <p id="statusLine">正在连接本地推理服务...</p>
+        </div>
+        <div class="topbar-actions">
+          <a class="nav-link" href="/features">特征曲线</a>
+          <div class="status-pill" id="devicePill">CUDA</div>
+        </div>
+      </header>
+
+      <section class="workspace-grid">
+        <div class="panel">
+          <div class="panel-head">
+            <h2>建库</h2>
+            <span id="cacheCount">0 caches</span>
+          </div>
+          <label>
+            产品型号
+            <input id="productId" value="part_A" />
+          </label>
+          <label>
+            OK 图片文件夹
+            <span class="help-text">选择一组正常样本建立基准库；也可以手动输入本机文件夹路径。</span>
+          </label>
+          <div class="path-picker">
+            <input id="okDir" value="{{ default_ok_dir }}" />
+            <button id="pickOkFolderButton" class="secondary" type="button">选择文件夹</button>
+            <input id="okFolderInput" type="file" accept="image/*" webkitdirectory multiple hidden />
+          </div>
+          <label>
+            NG 图片文件夹（可选）
+            <span class="help-text">选择已知异常样本后，检测会同时比较“更像 OK 还是更像 NG”。</span>
+          </label>
+          <div class="path-picker">
+            <input id="ngDir" placeholder="不选择时只使用 OK cache" />
+            <button id="pickNgFolderButton" class="secondary" type="button">选择文件夹</button>
+            <input id="ngFolderInput" type="file" accept="image/*" webkitdirectory multiple hidden />
+          </div>
+          <div class="form-row">
+            <label>
+              Top-K
+              <span class="help-text">取最相似的 K 张 OK 样本求平均，K 越大越稳但可能稀释局部异常。</span>
+              <input id="buildTopK" type="number" min="1" value="3" />
+            </label>
+            <label>
+              阈值
+              <span class="help-text">score 大于等于阈值判 OK，小于阈值判 NG；不同型号建议单独标定。</span>
+              <input id="buildThreshold" type="number" step="0.001" value="0.99" />
+            </label>
+          </div>
+          <div class="form-row">
+            <label>
+              OK 文本提示
+              <span class="help-text">每行一个 prompt，例如 correctly assembled part with all screws installed。</span>
+              <textarea id="okTextPrompts" rows="4" placeholder="a correctly assembled industrial part&#10;a product with all required screws installed"></textarea>
+            </label>
+            <label>
+              NG 文本提示
+              <span class="help-text">每行一个 prompt，例如 defective part with a missing screw。</span>
+              <textarea id="ngTextPrompts" rows="4" placeholder="a defective industrial part with a missing screw&#10;a product with missing components"></textarea>
+            </label>
+          </div>
+          <label>
+            文本权重
+            <span class="help-text">用于融合 OK-vs-NG 的 margin；阈值仍基于 OK 图像相似度。</span>
+            <input id="textWeight" type="number" min="0" max="1" step="0.05" value="0.2" />
+          </label>
+          <label>
+            Cache 输出路径
+            <input id="cachePath" value="{{ default_cache }}" />
+          </label>
+          <button id="buildButton" class="primary">建立 / 重建 Cache</button>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <h2>检测</h2>
+            <select id="cacheSelect"></select>
+          </div>
+          <label>
+            待测图片
+            <span class="help-text">点击选择图片会弹出系统文件对话框，并自动上传到本地服务。</span>
+          </label>
+          <div class="path-picker">
+            <input id="imagePath" value="{{ default_test_image }}" />
+            <button id="pickImageButton" class="secondary" type="button">选择图片</button>
+            <input id="imageFileInput" type="file" accept="image/*" hidden />
+          </div>
+          <div class="form-row">
+            <label>
+              Top-K
+              <span class="help-text">留空时使用 cache 里的配置。</span>
+              <input id="detectTopK" type="number" min="1" placeholder="使用 cache 配置" />
+            </label>
+            <label>
+              阈值
+              <span class="help-text">留空时使用 cache 里的配置；调高会更严格。</span>
+              <input id="detectThreshold" type="number" step="0.001" placeholder="使用 cache 配置" />
+            </label>
+          </div>
+          <button id="detectButton" class="primary">检测图片</button>
+          <div class="preview-wrap">
+            <img id="queryPreview" alt="query preview" />
+          </div>
+        </div>
+
+        <div class="result-panel" id="resultPanel">
+          <div class="result-main">
+            <div>
+              <p class="eyebrow">检测结果</p>
+              <div id="resultBadge" class="result-badge idle">待检测</div>
+            </div>
+            <div class="score-box">
+              <span>OK Score</span>
+              <strong id="scoreValue">--</strong>
+            </div>
+            <div class="score-box">
+              <span>NG Score</span>
+              <strong id="ngScoreValue">--</strong>
+            </div>
+            <div class="score-box">
+              <span>Margin</span>
+              <strong id="marginValue">--</strong>
+            </div>
+            <div class="score-box">
+              <span>Threshold</span>
+              <strong id="thresholdValue">--</strong>
+            </div>
+            <div class="score-box time-box">
+              <span>推理时间</span>
+              <strong id="inferenceTimeValue">--</strong>
+            </div>
+            <div class="score-box time-box">
+              <span>匹配时间</span>
+              <strong id="matchTimeValue">--</strong>
+            </div>
+          </div>
+          <div class="meta-row">
+            <span id="productMeta">Product: --</span>
+            <span id="featureMeta">Feature: --</span>
+            <span id="ngFeatureMeta">NG Cache: --</span>
+            <span id="imageScoreMeta">Image branch: --</span>
+            <span id="textScoreMeta">Text branch: --</span>
+            <span id="totalTimeMeta">Total: --</span>
+          </div>
+        </div>
+
+        <div class="panel topk-panel ok-topk-panel">
+          <div class="panel-head">
+            <h2>Top-K OK 样本</h2>
+            <span id="topKHint">等待检测</span>
+          </div>
+          <div id="topKList" class="topk-list"></div>
+        </div>
+
+        <div class="panel topk-panel ng-topk-panel">
+          <div class="panel-head">
+            <h2>Top-K NG 样本</h2>
+            <span id="topNgKHint">未启用 NG cache</span>
+          </div>
+          <div id="topNgKList" class="topk-list"></div>
+        </div>
+      </section>
+    </main>
+
+    <div id="toast" class="toast"></div>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+  </body>
+</html>

@@ -1,0 +1,625 @@
+<UserControl x:Class="VisionWorkbench.Views.ProductModelManagementView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:imagebox="clr-namespace:ImageBox;assembly=ImageBox"
+             mc:Ignorable="d">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="258" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="430" />
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0"
+                Style="{StaticResource PanelBorder}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="46" />
+                    <RowDefinition Height="174" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Border BorderBrush="{StaticResource AppBorderBrush}"
+                        BorderThickness="0,0,0,1"
+                        Padding="14,0">
+                    <TextBlock Text="型号管理"
+                               Style="{StaticResource SectionTitle}"
+                               VerticalAlignment="Center" />
+                </Border>
+
+                <Grid Grid.Row="1" Margin="12,10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="44" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="72" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="34" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="成品号"
+                               Style="{StaticResource MutedText}"
+                               VerticalAlignment="Center" />
+                    <ComboBox Grid.Column="1"
+                              Grid.ColumnSpan="2"
+                              ItemsSource="{Binding ProductModels}"
+                              DisplayMemberPath="Id"
+                              SelectedItem="{Binding SelectedProductModel, Mode=TwoWay}" />
+
+                    <TextBlock Grid.Row="1"
+                               Text="名称"
+                               Style="{StaticResource MutedText}"
+                               VerticalAlignment="Center"
+                               Margin="0,6,0,0" />
+                    <ComboBox Grid.Row="1"
+                              Grid.Column="1"
+                              ItemsSource="{Binding ProductModels}"
+                              DisplayMemberPath="Name"
+                              SelectedItem="{Binding SelectedProductModel, Mode=TwoWay}"
+                              Margin="0,6,0,0" />
+                    <Button Grid.Row="1"
+                            Grid.Column="2"
+                            Style="{StaticResource IconButton}"
+                            ToolTip="编辑名称"
+                            Command="{Binding RenameProductModelCommand}"
+                            Margin="0,6,0,0">
+                        <TextBlock Style="{StaticResource IconGlyph}" Text="&#xE70F;" />
+                    </Button>
+
+                    <TextBlock Grid.Row="2"
+                               Text="扫码枪"
+                               Style="{StaticResource MutedText}"
+                               VerticalAlignment="Center"
+                               Margin="0,6,0,0" />
+                    <TextBox Grid.Row="2"
+                             Grid.Column="1"
+                            Text="{Binding BarcodeScanner.LastProductCode}"
+                             IsReadOnly="True"
+                             VerticalContentAlignment="Center"
+                             Margin="0,6,6,0" />
+                    <Button Grid.Row="2"
+                            Grid.Column="2"
+                            Style="{StaticResource IconButton}"
+                            ToolTip="切换到扫码成品号"
+                            Command="{Binding SelectScannedProductModelCommand}"
+                            Margin="0,6,0,0">
+                        <TextBlock Style="{StaticResource IconGlyph}" Text="&#xE8AB;" />
+                    </Button>
+
+                    <WrapPanel Grid.Row="3"
+                               Grid.ColumnSpan="3"
+                               Margin="0,10,0,8">
+                        <Button Content="新建"
+                                Style="{StaticResource HeaderActionButton}"
+                                Background="{StaticResource PrimaryBrush}"
+                                BorderBrush="{StaticResource PrimaryBrush}"
+                                MinWidth="48"
+                                Padding="8,0"
+                                Command="{Binding CreateProductModelCommand}" />
+                        <Button Content="复制"
+                                Style="{StaticResource HeaderActionButton}"
+                                Background="{StaticResource PrimaryBrush}"
+                                BorderBrush="{StaticResource PrimaryBrush}"
+                                MinWidth="48"
+                                Padding="8,0"
+                                Command="{Binding CopyProductModelCommand}" />
+                        <Button Content="删除"
+                                Style="{StaticResource HeaderActionButton}"
+                                Background="{StaticResource DangerBrush}"
+                                BorderBrush="{StaticResource DangerBrush}"
+                                MinWidth="48"
+                                Padding="8,0"
+                                Command="{Binding DeleteProductModelCommand}" />
+                    </WrapPanel>
+                </Grid>
+
+                <ScrollViewer Grid.Row="2"
+                              VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled">
+                    <ItemsControl ItemsSource="{Binding CameraTemplates}" Margin="12,0,12,12">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button Command="{Binding DataContext.SelectCameraTemplateCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        CommandParameter="{Binding}"
+                                        Padding="0"
+                                        BorderThickness="0"
+                                        Background="Transparent"
+                                        HorizontalContentAlignment="Stretch">
+                                    <Border CornerRadius="6"
+                                            Padding="10"
+                                            Margin="0,0,0,8">
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Setter Property="Background" Value="{StaticResource SurfaceBrush}" />
+                                                <Setter Property="BorderBrush" Value="{StaticResource AppBorderBrush}" />
+                                                <Setter Property="BorderThickness" Value="1" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                                        <Setter Property="Background" Value="#D8E7FF" />
+                                                        <Setter Property="BorderBrush" Value="{StaticResource PrimaryBrush}" />
+                                                        <Setter Property="BorderThickness" Value="2" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding CameraName}"
+                                                           FontWeight="SemiBold"
+                                                           Foreground="{StaticResource TextBrush}" />
+                                                <TextBlock Text="{Binding ImageSizeText}"
+                                                           Style="{StaticResource MutedText}"
+                                                           Margin="0,4,0,0" />
+                                                <TextBlock Text="{Binding RegisteredAtText}"
+                                                           Style="{StaticResource MutedText}"
+                                                           TextTrimming="CharacterEllipsis"
+                                                           Margin="0,2,0,0" />
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="1"
+                                                        HorizontalAlignment="Right">
+                                                <Ellipse Width="9"
+                                                         Height="9"
+                                                         Fill="{Binding StatusBrush}"
+                                                         HorizontalAlignment="Right" />
+                                                <TextBlock Text="{Binding StatusText}"
+                                                           Foreground="{Binding StatusBrush}"
+                                                           FontSize="12"
+                                                           FontWeight="SemiBold"
+                                                           Margin="0,7,0,0" />
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+                                </Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Grid>
+        </Border>
+
+        <Border Grid.Column="1"
+                Style="{StaticResource PanelBorder}"
+                Margin="8,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="46" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Border BorderBrush="{StaticResource AppBorderBrush}"
+                        BorderThickness="0,0,0,1"
+                        Padding="14,0">
+                    <Grid>
+                        <TextBlock Text="{Binding SelectedCameraTemplate.CameraName}"
+                                   Style="{StaticResource SectionTitle}"
+                                   VerticalAlignment="Center" />
+                        <TextBlock Text="{Binding SelectedCameraTemplate.StatusText}"
+                                   Foreground="{Binding SelectedCameraTemplate.StatusBrush}"
+                                   FontWeight="SemiBold"
+                                   FontSize="12"
+                                   HorizontalAlignment="Right"
+                                   VerticalAlignment="Center" />
+                    </Grid>
+                </Border>
+
+                <imagebox:ImageBoxControl Grid.Row="1"
+                                          ImageSource="{Binding SelectedCameraTemplate.ReferenceImage}"
+                                          OverlayItems="{Binding EffectiveAlignmentOverlays}"
+                                          InteractionMode="{Binding TemplateImageInteractionMode}"
+                                          RoiDrawCompleted="TemplateImageBox_RoiDrawCompleted"
+                                          RoiDrawRejected="TemplateImageBox_RoiDrawRejected"
+                                          OverlayItemSelected="TemplateImageBox_OverlayItemSelected"
+                                          OverlayItemEditCompleted="TemplateImageBox_OverlayItemEditCompleted"
+                                          ShowInfoOverlay="False" />
+            </Grid>
+        </Border>
+
+        <Border Grid.Column="2"
+                Style="{StaticResource PanelBorder}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="46" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Border BorderBrush="{StaticResource AppBorderBrush}"
+                        BorderThickness="0,0,0,1"
+                        Padding="14,0">
+                    <TextBlock Text="模板数据"
+                               Style="{StaticResource SectionTitle}"
+                               VerticalAlignment="Center" />
+                </Border>
+
+                <Grid Grid.Row="1" Margin="12,10,12,8">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="32" />
+                        <RowDefinition Height="32" />
+                        <RowDefinition Height="32" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="54" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="图像"
+                               Style="{StaticResource MutedText}"
+                               VerticalAlignment="Center" />
+                    <WrapPanel Grid.Column="1">
+                        <Button Content="拍照"
+                                Style="{StaticResource HeaderActionButton}"
+                                Background="{StaticResource SuccessBrush}"
+                                BorderBrush="{StaticResource SuccessBrush}"
+                                MinWidth="54"
+                                Padding="8,0"
+                                Command="{Binding CaptureSelectedTemplateCommand}"
+                                IsEnabled="{Binding HasSelectedCameraTemplate}" />
+                        <Button Content="读图"
+                                Style="{StaticResource HeaderActionButton}"
+                                Background="{StaticResource WarningBrush}"
+                                BorderBrush="{StaticResource WarningBrush}"
+                                MinWidth="54"
+                                Padding="8,0"
+                                Command="{Binding LoadSelectedReferenceImageCommand}"
+                                IsEnabled="{Binding HasSelectedCameraTemplate}" />
+                    </WrapPanel>
+
+                    <TextBlock Grid.Row="1"
+                               Text="模板"
+                               Style="{StaticResource MutedText}"
+                               VerticalAlignment="Center" />
+                    <WrapPanel Grid.Row="1" Grid.Column="1">
+                        <Button Content="创建"
+                                Style="{StaticResource HeaderActionButton}"
+                                Background="{StaticResource PrimaryBrush}"
+                                BorderBrush="{StaticResource PrimaryBrush}"
+                                MinWidth="54"
+                                Padding="8,0"
+                                Command="{Binding CreateSelectedTemplateCommand}"
+                                IsEnabled="{Binding HasSelectedCameraTemplate}" />
+                        <Button Content="清除"
+                                Style="{StaticResource HeaderActionButton}"
+                                Background="{StaticResource DangerBrush}"
+                                BorderBrush="{StaticResource DangerBrush}"
+                                MinWidth="54"
+                                Padding="8,0"
+                                Command="{Binding ClearSelectedTemplateCommand}"
+                                IsEnabled="{Binding HasSelectedCameraTemplate}" />
+                    </WrapPanel>
+
+                    <TextBlock Grid.Row="2"
+                               Text="有效区"
+                               Style="{StaticResource MutedText}"
+                               VerticalAlignment="Center" />
+                    <WrapPanel Grid.Row="2" Grid.Column="1">
+                        <Button Content="绘制"
+                                Style="{StaticResource HeaderActionButton}"
+                                Background="{StaticResource PrimaryBrush}"
+                                BorderBrush="{StaticResource PrimaryBrush}"
+                                MinWidth="54"
+                                Padding="8,0"
+                                Command="{Binding DrawEffectiveAlignmentRegionCommand}"
+                                IsEnabled="{Binding CanEditEffectiveAlignmentRegion}" />
+                        <Button Content="清除"
+                                Style="{StaticResource HeaderActionButton}"
+                                Background="{StaticResource AppBorderBrush}"
+                                BorderBrush="{StaticResource AppBorderBrush}"
+                                MinWidth="54"
+                                Padding="8,0"
+                                Command="{Binding ClearEffectiveAlignmentRegionCommand}"
+                                IsEnabled="{Binding CanClearEffectiveAlignmentRegion}" />
+                    </WrapPanel>
+
+                    <Border Grid.ColumnSpan="2"
+                            BorderBrush="{StaticResource AppBorderBrush}"
+                            BorderThickness="0,0,0,1"
+                            IsHitTestVisible="False" />
+                    <Border Grid.Row="1"
+                            Grid.ColumnSpan="2"
+                            BorderBrush="{StaticResource AppBorderBrush}"
+                            BorderThickness="0,0,0,1"
+                            IsHitTestVisible="False" />
+                    <Border Grid.Row="2"
+                            Grid.ColumnSpan="2"
+                            BorderBrush="{StaticResource AppBorderBrush}"
+                            BorderThickness="0,0,0,1"
+                            IsHitTestVisible="False" />
+                </Grid>
+
+                <ScrollViewer Grid.Row="2"
+                              VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel Margin="14,4,14,12">
+                        <TextBlock Text="有效区域"
+                                   FontWeight="SemiBold"
+                                   Foreground="{StaticResource TextBrush}"
+                                   Margin="0,0,0,8" />
+                        <Grid Margin="0,0,0,14">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="102" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="匹配模式"
+                                       Style="{StaticResource MutedText}"
+                                       HorizontalAlignment="Right"
+                                       VerticalAlignment="Center"
+                                       Margin="0,0,10,0" />
+                            <ComboBox Grid.Column="1"
+                                      ItemsSource="{Binding AlignmentModeOptions}"
+                                      SelectedItem="{Binding SelectedCameraTemplate.AlignmentModeDisplay, Mode=TwoWay}"
+                                      IsEnabled="{Binding HasSelectedCameraTemplate}" />
+                        </Grid>
+
+                        <TextBlock Text="模板参数"
+                                   FontWeight="SemiBold"
+                                   Foreground="{StaticResource TextBrush}"
+                                   Margin="0,0,0,8" />
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="32" />
+                                <RowDefinition Height="32" />
+                                <RowDefinition Height="32" />
+                                <RowDefinition Height="32" />
+                                <RowDefinition Height="32" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="102" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="特征方法"
+                                       Style="{StaticResource MutedText}"
+                                       HorizontalAlignment="Right"
+                                       VerticalAlignment="Center"
+                                       Margin="0,0,10,0" />
+                            <ComboBox Grid.Column="1"
+                                      ItemsSource="{Binding FeatureMethodOptions}"
+                                      SelectedItem="{Binding SelectedCameraTemplate.FeatureMethodDisplay, Mode=TwoWay}"
+                                      IsEnabled="{Binding HasSelectedCameraTemplate}" />
+
+                            <TextBlock Grid.Row="1"
+                                       Text="图片长边"
+                                       Style="{StaticResource MutedText}"
+                                       HorizontalAlignment="Right"
+                                       VerticalAlignment="Center"
+                                       Margin="0,6,10,0" />
+                            <TextBox Grid.Row="1"
+                                     Grid.Column="1"
+                                     Text="{Binding SelectedCameraTemplate.MaxLongSide, Mode=TwoWay}"
+                                     IsEnabled="{Binding HasSelectedCameraTemplate}"
+                                     Margin="0,6,0,0" />
+
+                            <TextBlock Grid.Row="2"
+                                       Text="最大特征点"
+                                       Style="{StaticResource MutedText}"
+                                       HorizontalAlignment="Right"
+                                       VerticalAlignment="Center"
+                                       Margin="0,6,10,0" />
+                            <TextBox Grid.Row="2"
+                                     Grid.Column="1"
+                                     Text="{Binding SelectedCameraTemplate.MaxFeatures, Mode=TwoWay}"
+                                     IsEnabled="{Binding HasSelectedCameraTemplate}"
+                                     Margin="0,6,0,0" />
+
+                            <TextBlock Grid.Row="3"
+                                       Text="变换模型"
+                                       Style="{StaticResource MutedText}"
+                                       HorizontalAlignment="Right"
+                                       VerticalAlignment="Center"
+                                       Margin="0,6,10,0" />
+                            <TextBox Grid.Row="3"
+                                     Grid.Column="1"
+                                     Text="{Binding SelectedCameraTemplate.Definition.TransformModel}"
+                                     IsReadOnly="True"
+                                     Margin="0,6,0,0" />
+
+                            <TextBlock Grid.Row="4"
+                                       Text="参数状态"
+                                       Style="{StaticResource MutedText}"
+                                       HorizontalAlignment="Right"
+                                       VerticalAlignment="Center"
+                                       Margin="0,6,10,0" />
+                            <TextBlock Grid.Row="4"
+                                       Grid.Column="1"
+                                       Text="{Binding SelectedCameraTemplate.ParameterStatusText}"
+                                       Foreground="{Binding SelectedCameraTemplate.StatusBrush}"
+                                       FontWeight="SemiBold"
+                                       VerticalAlignment="Center"
+                                       Margin="0,6,0,0" />
+                        </Grid>
+
+                        <Expander Header="高级参数"
+                                  IsExpanded="False"
+                                  Margin="0,12,0,0">
+                            <Grid Margin="0,8,0,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="32" />
+                                    <RowDefinition Height="32" />
+                                    <RowDefinition Height="32" />
+                                    <RowDefinition Height="32" />
+                                    <RowDefinition Height="32" />
+                                    <RowDefinition Height="32" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="102" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Text="LoweRatio"
+                                           Style="{StaticResource MutedText}"
+                                           HorizontalAlignment="Right"
+                                           VerticalAlignment="Center"
+                                           Margin="0,0,10,0" />
+                                <TextBox Grid.Column="1"
+                                         Text="{Binding SelectedCameraTemplate.LoweRatio, Mode=TwoWay}"
+                                         IsEnabled="{Binding HasSelectedCameraTemplate}" />
+
+                                <TextBlock Grid.Row="1"
+                                           Text="最少匹配"
+                                           Style="{StaticResource MutedText}"
+                                           HorizontalAlignment="Right"
+                                           VerticalAlignment="Center"
+                                           Margin="0,6,10,0" />
+                                <TextBox Grid.Row="1"
+                                         Grid.Column="1"
+                                         Text="{Binding SelectedCameraTemplate.MinGoodMatches, Mode=TwoWay}"
+                                         IsEnabled="{Binding HasSelectedCameraTemplate}"
+                                         Margin="0,6,0,0" />
+
+                                <TextBlock Grid.Row="2"
+                                           Text="最少内点"
+                                           Style="{StaticResource MutedText}"
+                                           HorizontalAlignment="Right"
+                                           VerticalAlignment="Center"
+                                           Margin="0,6,10,0" />
+                                <TextBox Grid.Row="2"
+                                         Grid.Column="1"
+                                         Text="{Binding SelectedCameraTemplate.MinInliers, Mode=TwoWay}"
+                                         IsEnabled="{Binding HasSelectedCameraTemplate}"
+                                         Margin="0,6,0,0" />
+
+                                <TextBlock Grid.Row="3"
+                                           Text="内点比例"
+                                           Style="{StaticResource MutedText}"
+                                           HorizontalAlignment="Right"
+                                           VerticalAlignment="Center"
+                                           Margin="0,6,10,0" />
+                                <TextBox Grid.Row="3"
+                                         Grid.Column="1"
+                                         Text="{Binding SelectedCameraTemplate.MinInlierRatio, Mode=TwoWay}"
+                                         IsEnabled="{Binding HasSelectedCameraTemplate}"
+                                         Margin="0,6,0,0" />
+
+                                <TextBlock Grid.Row="4"
+                                           Text="RANSAC阈值"
+                                           Style="{StaticResource MutedText}"
+                                           HorizontalAlignment="Right"
+                                           VerticalAlignment="Center"
+                                           Margin="0,6,10,0" />
+                                <TextBox Grid.Row="4"
+                                         Grid.Column="1"
+                                         Text="{Binding SelectedCameraTemplate.RansacReprojectionThreshold, Mode=TwoWay}"
+                                         IsEnabled="{Binding HasSelectedCameraTemplate}"
+                                         Margin="0,6,0,0" />
+
+                                <TextBlock Grid.Row="5"
+                                           Text="最大RMSE"
+                                           Style="{StaticResource MutedText}"
+                                           HorizontalAlignment="Right"
+                                           VerticalAlignment="Center"
+                                           Margin="0,6,10,0" />
+                                <TextBox Grid.Row="5"
+                                         Grid.Column="1"
+                                         Text="{Binding SelectedCameraTemplate.MaxReprojectionRmse, Mode=TwoWay}"
+                                         IsEnabled="{Binding HasSelectedCameraTemplate}"
+                                         Margin="0,6,0,0" />
+                            </Grid>
+                        </Expander>
+
+                        <Separator Margin="0,14,0,10" />
+
+                        <TextBlock Text="模板记录"
+                                   FontWeight="SemiBold"
+                                   Foreground="{StaticResource TextBrush}"
+                                   Margin="0,0,0,8" />
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="102" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="型号"
+                                       Style="{StaticResource MutedText}"
+                                       HorizontalAlignment="Right"
+                                       Margin="0,0,10,0" />
+                            <TextBlock Grid.Column="1"
+                                       Text="{Binding SelectedProductModel.Name}"
+                                       TextTrimming="CharacterEllipsis" />
+
+                            <TextBlock Grid.Row="1"
+                                       Text="相机"
+                                       Style="{StaticResource MutedText}"
+                                       HorizontalAlignment="Right"
+                                       Margin="0,8,10,0" />
+                            <TextBlock Grid.Row="1"
+                                       Grid.Column="1"
+                                       Text="{Binding SelectedCameraTemplate.CameraName}"
+                                       Margin="0,8,0,0" />
+
+                            <TextBlock Grid.Row="2"
+                                       Text="图片尺寸"
+                                       Style="{StaticResource MutedText}"
+                                       HorizontalAlignment="Right"
+                                       Margin="0,8,10,0" />
+                            <TextBlock Grid.Row="2"
+                                       Grid.Column="1"
+                                       Text="{Binding SelectedCameraTemplate.ImageSizeText}"
+                                       Margin="0,8,0,0" />
+
+                            <TextBlock Grid.Row="3"
+                                       Text="关键点"
+                                       Style="{StaticResource MutedText}"
+                                       HorizontalAlignment="Right"
+                                       Margin="0,8,10,0" />
+                            <TextBlock Grid.Row="3"
+                                       Grid.Column="1"
+                                       Text="{Binding SelectedCameraTemplate.KeyPointText}"
+                                       Margin="0,8,0,0" />
+
+                            <TextBlock Grid.Row="4"
+                                       Text="描述符"
+                                       Style="{StaticResource MutedText}"
+                                       HorizontalAlignment="Right"
+                                       Margin="0,8,10,0" />
+                            <TextBlock Grid.Row="4"
+                                       Grid.Column="1"
+                                       Text="{Binding SelectedCameraTemplate.DescriptorText}"
+                                       Margin="0,8,0,0" />
+
+                            <TextBlock Grid.Row="5"
+                                       Text="注册时间"
+                                       Style="{StaticResource MutedText}"
+                                       HorizontalAlignment="Right"
+                                       Margin="0,8,10,0" />
+                            <TextBlock Grid.Row="5"
+                                       Grid.Column="1"
+                                       Text="{Binding SelectedCameraTemplate.RegisteredAtText}"
+                                       Margin="0,8,0,0" />
+
+                            <TextBlock Grid.Row="6"
+                                       Text="状态"
+                                       Style="{StaticResource MutedText}"
+                                       HorizontalAlignment="Right"
+                                       Margin="0,8,10,0" />
+                            <TextBlock Grid.Row="6"
+                                       Grid.Column="1"
+                                       Text="{Binding OperationMessage}"
+                                       TextTrimming="CharacterEllipsis"
+                                       Margin="0,8,0,0" />
+                        </Grid>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

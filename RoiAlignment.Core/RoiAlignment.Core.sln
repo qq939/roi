@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5D3475BD-9CEB-4990-8F36-5C93BA6F4707}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoiAlignment.Core", "src\RoiAlignment.Core\RoiAlignment.Core.csproj", "{A89CC5AD-662F-41E5-99D4-DC1244B1FDFF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{41BBBC9B-43B6-4D5A-A6B6-11FD39759BD4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoiAlignment.Demo.Wpf", "samples\RoiAlignment.Demo.Wpf\RoiAlignment.Demo.Wpf.csproj", "{60710233-580D-4DA3-B0BD-0CB3EEB817D1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{2813E4B8-7F47-4592-9066-D93160291A33}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoiAlignment.Core.Tests", "tests\RoiAlignment.Core.Tests\RoiAlignment.Core.Tests.csproj", "{CDA49CE9-8675-4DE5-8401-9930753DDC4E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A89CC5AD-662F-41E5-99D4-DC1244B1FDFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A89CC5AD-662F-41E5-99D4-DC1244B1FDFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A89CC5AD-662F-41E5-99D4-DC1244B1FDFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A89CC5AD-662F-41E5-99D4-DC1244B1FDFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60710233-580D-4DA3-B0BD-0CB3EEB817D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60710233-580D-4DA3-B0BD-0CB3EEB817D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60710233-580D-4DA3-B0BD-0CB3EEB817D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60710233-580D-4DA3-B0BD-0CB3EEB817D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDA49CE9-8675-4DE5-8401-9930753DDC4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDA49CE9-8675-4DE5-8401-9930753DDC4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDA49CE9-8675-4DE5-8401-9930753DDC4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDA49CE9-8675-4DE5-8401-9930753DDC4E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A89CC5AD-662F-41E5-99D4-DC1244B1FDFF} = {5D3475BD-9CEB-4990-8F36-5C93BA6F4707}
+		{60710233-580D-4DA3-B0BD-0CB3EEB817D1} = {41BBBC9B-43B6-4D5A-A6B6-11FD39759BD4}
+		{CDA49CE9-8675-4DE5-8401-9930753DDC4E} = {2813E4B8-7F47-4592-9066-D93160291A33}
+	EndGlobalSection
+EndGlobal

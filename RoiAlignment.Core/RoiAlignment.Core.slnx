@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/samples/">
+    <Project Path="samples/RoiAlignment.Demo.Wpf/RoiAlignment.Demo.Wpf.csproj" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/RoiAlignment.Core/RoiAlignment.Core.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/RoiAlignment.Core.Tests/RoiAlignment.Core.Tests.csproj" />
+  </Folder>
+</Solution>

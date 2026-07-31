@@ -1,0 +1,87 @@
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.userprefs
+
+# Build artifacts
+*.pdb
+*.dll
+*.exe
+*.pdb
+*.ilk
+*.obj
+*.iobj
+*.ipdb
+*.pgc
+*.pgd
+
+# NuGet
+*.nupkg
+*.snupkg
+**/[Pp]ackages/*
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# .NET Core
+*.binlog
+*.nuget.props
+*.nuget.targets
+
+# Test Results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+nunit-*.xml
+coverage*.json
+coverage*.xml
+coverage*.info
+*.coverage
+*.coveragexml
+
+# Output directories (demo/test results)
+Uploads/
+demoImage/
+Cache/
+**/Uploads/
+**/Cache/
+
+# Environment files
+.env
+.env.*
+*.env
+
+# Database files (cache)
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+~$*
+
+# Third-party native libraries (keep source, not binaries)
+# ThirdParty/

@@ -1,0 +1,51 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisionWorkbench", "VisionWorkbench\VisionWorkbench\VisionWorkbench.csproj", "{CF28CEF9-1635-4F0F-94AA-F138608DE01A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageBox", "VisionWorkbench\ImageBox\ImageBox.csproj", "{5B869849-A41A-4BD6-B965-A5723F00D138}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoInference.Camera", "VisionWorkbench\VideoInference.Camera\VideoInference.Camera.csproj", "{C3A3E564-493C-4B3D-ACF0-E74BCD0562F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoiAlignment.Core", "VisionWorkbench\RoiAlignment.Core\src\RoiAlignment.Core\RoiAlignment.Core.csproj", "{D4A5B2C1-E6F7-4891-9ABC-1234567890AB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CLIPDemo", "VisionWorkbench\CLIPDemo", "{E6D6E7F2-B17D-4F4D-A5C0-A16A297C27EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClipInspect", "VisionWorkbench\CLIPDemo\ClipInspect\ClipInspect.csproj", "{63A6A3AC-BE1B-4B18-A615-5A67C87D7F0D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CF28CEF9-1635-4F0F-94AA-F138608DE01A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF28CEF9-1635-4F0F-94AA-F138608DE01A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF28CEF9-1635-4F0F-94AA-F138608DE01A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF28CEF9-1635-4F0F-94AA-F138608DE01A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B869849-A41A-4BD6-B965-A5723F00D138}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B869849-A41A-4BD6-B965-A5723F00D138}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B869849-A41A-4BD6-B965-A5723F00D138}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B869849-A41A-4BD6-B965-A5723F00D138}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3A3E564-493C-4B3D-ACF0-E74BCD0562F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3A3E564-493C-4B3D-ACF0-E74BCD0562F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3A3E564-493C-4B3D-ACF0-E74BCD0562F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3A3E564-493C-4B3D-ACF0-E74BCD0562F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4A5B2C1-E6F7-4891-9ABC-1234567890AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4A5B2C1-E6F7-4891-9ABC-1234567890AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4A5B2C1-E6F7-4891-9ABC-1234567890AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4A5B2C1-E6F7-4891-9ABC-1234567890AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63A6A3AC-BE1B-4B18-A615-5A67C87D7F0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63A6A3AC-BE1B-4B18-A615-5A67C87D7F0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63A6A3AC-BE1B-4B18-A615-5A67C87D7F0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63A6A3AC-BE1B-4B18-A615-5A67C87D7F0D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{63A6A3AC-BE1B-4B18-A615-5A67C87D7F0D} = {E6D6E7F2-B17D-4F4D-A5C0-A16A297C27EE}
+	EndGlobalSection
+EndGlobal

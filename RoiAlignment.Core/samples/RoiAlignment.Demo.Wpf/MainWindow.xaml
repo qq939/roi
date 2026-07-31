@@ -1,0 +1,214 @@
+<Window x:Class="RoiAlignment.Demo.Wpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ROI Alignment Demo"
+        Height="820"
+        MinHeight="640"
+        Width="1240"
+        MinWidth="980"
+        Background="#F5F7FA"
+        WindowStartupLocation="CenterScreen">
+    <DockPanel>
+        <Border DockPanel.Dock="Top"
+                Background="#FFFFFF"
+                BorderBrush="#D8DEE8"
+                BorderThickness="0,0,0,1"
+                Padding="12">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0"
+                        Width="112"
+                        Height="34"
+                        Margin="0,0,8,0"
+                        Click="LoadReference_Click"
+                        Content="加载参考图" />
+                <Button Grid.Column="1"
+                        Width="112"
+                        Height="34"
+                        Margin="0,0,8,0"
+                        Click="LoadRuntime_Click"
+                        Content="加载实际图" />
+                <Button Grid.Column="2"
+                        Width="112"
+                        Height="34"
+                        Margin="0,0,8,0"
+                        Click="Align_Click"
+                        Content="开始对齐" />
+                <Button Grid.Column="3"
+                        Width="96"
+                        Height="34"
+                        Margin="0,0,14,0"
+                        Click="ClearRois_Click"
+                        Content="清空 ROI" />
+
+                <StackPanel Grid.Column="4"
+                            Margin="0,0,14,0"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center">
+                    <TextBlock VerticalAlignment="Center"
+                               Foreground="#4B5563"
+                               Text="方法" />
+                    <ComboBox x:Name="FeatureMethodComboBox"
+                              Width="86"
+                              Height="28"
+                              Margin="8,0,0,0"
+                              SelectedIndex="0">
+                        <ComboBoxItem Content="SIFT" />
+                        <ComboBoxItem Content="AKAZE" />
+                        <ComboBoxItem Content="ORB" />
+                    </ComboBox>
+                </StackPanel>
+
+                <StackPanel Grid.Column="5"
+                            Margin="0,0,16,0"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center">
+                    <TextBlock VerticalAlignment="Center"
+                               Foreground="#4B5563"
+                               Text="最少匹配" />
+                    <TextBox x:Name="MinMatchesTextBox"
+                             Width="48"
+                             Height="28"
+                             Margin="8,0,0,0"
+                             VerticalContentAlignment="Center"
+                             Text="12" />
+                </StackPanel>
+
+                <TextBlock Grid.Column="6"
+                           VerticalAlignment="Center"
+                           Foreground="#4B5563"
+                           Text="在左侧参考图上按住鼠标拖拽绘制 ROI，然后点击开始对齐。" />
+            </Grid>
+        </Border>
+
+        <Grid Margin="12">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="12" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0"
+                        Background="#FFFFFF"
+                        BorderBrush="#D8DEE8"
+                        BorderThickness="1"
+                        CornerRadius="6">
+                    <DockPanel>
+                        <Border DockPanel.Dock="Top"
+                                Background="#FAFBFC"
+                                BorderBrush="#E5EAF1"
+                                BorderThickness="0,0,0,1"
+                                Padding="10,8">
+                            <StackPanel>
+                                <TextBlock FontWeight="SemiBold"
+                                           Foreground="#111827"
+                                           Text="参考图" />
+                                <TextBlock x:Name="ReferencePathTextBlock"
+                                           Margin="0,3,0,0"
+                                           Foreground="#6B7280"
+                                           Text="未加载" />
+                            </StackPanel>
+                        </Border>
+
+                        <ScrollViewer x:Name="ReferenceScrollViewer"
+                                      HorizontalScrollBarVisibility="Auto"
+                                      VerticalScrollBarVisibility="Auto"
+                                      Background="#111827">
+                            <Canvas x:Name="ReferenceCanvas"
+                                    Background="#111827"
+                                    MouseLeftButtonDown="ReferenceCanvas_MouseLeftButtonDown"
+                                    MouseMove="ReferenceCanvas_MouseMove"
+                                    MouseLeftButtonUp="ReferenceCanvas_MouseLeftButtonUp">
+                                <Image x:Name="ReferenceImage"
+                                       Stretch="None" />
+                            </Canvas>
+                        </ScrollViewer>
+                    </DockPanel>
+                </Border>
+
+                <Border Grid.Column="2"
+                        Background="#FFFFFF"
+                        BorderBrush="#D8DEE8"
+                        BorderThickness="1"
+                        CornerRadius="6">
+                    <DockPanel>
+                        <Border DockPanel.Dock="Top"
+                                Background="#FAFBFC"
+                                BorderBrush="#E5EAF1"
+                                BorderThickness="0,0,0,1"
+                                Padding="10,8">
+                            <StackPanel>
+                                <TextBlock FontWeight="SemiBold"
+                                           Foreground="#111827"
+                                           Text="实际图" />
+                                <TextBlock x:Name="RuntimePathTextBlock"
+                                           Margin="0,3,0,0"
+                                           Foreground="#6B7280"
+                                           Text="未加载" />
+                            </StackPanel>
+                        </Border>
+
+                        <ScrollViewer x:Name="RuntimeScrollViewer"
+                                      HorizontalScrollBarVisibility="Auto"
+                                      VerticalScrollBarVisibility="Auto"
+                                      Background="#111827">
+                            <Canvas x:Name="RuntimeCanvas"
+                                    Background="#111827">
+                                <Image x:Name="RuntimeImage"
+                                       Stretch="None" />
+                            </Canvas>
+                        </ScrollViewer>
+                    </DockPanel>
+                </Border>
+            </Grid>
+
+            <Border Grid.Row="1"
+                    Margin="0,12,0,0"
+                    Background="#FFFFFF"
+                    BorderBrush="#D8DEE8"
+                    BorderThickness="1"
+                    CornerRadius="6"
+                    Padding="12">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock x:Name="StatusTextBlock"
+                               VerticalAlignment="Center"
+                               Foreground="#111827"
+                               Text="准备就绪" />
+
+                    <StackPanel Grid.Column="1"
+                                Orientation="Horizontal">
+                        <TextBlock x:Name="RoiCountTextBlock"
+                                   Margin="0,0,18,0"
+                                   VerticalAlignment="Center"
+                                   Foreground="#4B5563"
+                                   Text="ROI: 0" />
+                        <TextBlock x:Name="MetricsTextBlock"
+                                   VerticalAlignment="Center"
+                                   Foreground="#4B5563"
+                                   Text="方法: -, 匹配: -, Good: -, Inliers: -, RMSE: -, 耗时: -" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+    </DockPanel>
+</Window>

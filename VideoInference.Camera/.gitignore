@@ -1,0 +1,6 @@
+# Build outputs (root level covers these)
+# [Dd]ebug/ [Bb]in/ [Oo]bj/ etc. - handled in root .gitignore
+
+# Environment files
+.env
+.env.*

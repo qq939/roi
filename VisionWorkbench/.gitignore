@@ -1,0 +1,13 @@
+# Build outputs (root level covers these)
+# [Dd]ebug/ [Bb]in/ [Oo]bj/ etc. - handled in root .gitignore
+
+# VisionWorkbench specific outputs
+CLIPDemo/Uploads/
+CLIPDemo/demoImage/
+CLIPDemo/Cache/
+CLIPDemo/python_demo/__pycache__/
+CLIPDemo/*.pyc
+
+# Environment files
+.env
+.env.*

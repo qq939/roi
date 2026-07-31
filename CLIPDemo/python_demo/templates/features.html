@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CLIP Feature Curves</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='features.css') }}" />
+  </head>
+  <body>
+    <main class="app-shell feature-shell">
+      <header class="topbar">
+        <div>
+          <h1>特征曲线</h1>
+          <p id="featureStatus">选择一个 cache 查看 512 维图像特征曲线</p>
+        </div>
+        <div class="topbar-actions">
+          <a class="nav-link" href="/">检测页面</a>
+          <div class="status-pill" id="featureDimPill">512 dim</div>
+        </div>
+      </header>
+
+      <section class="feature-layout">
+        <aside class="panel feature-sidebar">
+          <div class="panel-head">
+            <h2>样本</h2>
+            <span id="sampleCount">0 samples</span>
+          </div>
+          <label>
+            Cache
+            <select id="featureCacheSelect"></select>
+          </label>
+          <div class="feature-actions">
+            <button id="selectAllButton" class="secondary" type="button">全选</button>
+            <button id="clearAllButton" class="secondary" type="button">清空</button>
+          </div>
+          <div class="feature-legend">
+            <span><i class="legend-dot ok-dot"></i>OK</span>
+            <span><i class="legend-dot ng-dot"></i>NG</span>
+          </div>
+          <div id="sampleList" class="sample-list"></div>
+        </aside>
+
+        <section class="panel feature-chart-panel">
+          <div class="panel-head">
+            <h2 id="chartTitle">Feature[0..511]</h2>
+            <span id="chartRange">--</span>
+          </div>
+          <div class="chart-toolbar">
+            <label class="inline-control">
+              <input id="normalizeToggle" type="checkbox" />
+              按当前选择归一化显示
+            </label>
+            <label class="inline-control">
+              <input id="meanToggle" type="checkbox" checked />
+              显示 OK/NG 均值
+            </label>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="featureCanvas" width="1200" height="620"></canvas>
+          </div>
+          <div id="hoverInfo" class="hover-info">移动到曲线上查看维度和值</div>
+        </section>
+      </section>
+    </main>
+
+    <div id="toast" class="toast"></div>
+    <script src="{{ url_for('static', filename='features.js') }}"></script>
+  </body>
+</html>

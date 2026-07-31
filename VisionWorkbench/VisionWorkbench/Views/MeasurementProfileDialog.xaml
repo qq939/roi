@@ -1,0 +1,151 @@
+<Window x:Class="VisionWorkbench.Views.MeasurementProfileDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="测量 Profile"
+        Width="900"
+        Height="620"
+        MinWidth="760"
+        MinHeight="520"
+        WindowStartupLocation="CenterOwner">
+    <Border Style="{StaticResource PanelBorder}"
+            Margin="12"
+            Padding="14">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="ROI Profile"
+                       Style="{StaticResource SectionTitle}"
+                       FontSize="16" />
+
+            <Border Grid.Row="1"
+                    BorderBrush="{StaticResource AppBorderBrush}"
+                    BorderThickness="1"
+                    Margin="0,12,0,12"
+                    Background="#101820">
+                <Canvas x:Name="ChartCanvas"
+                        ClipToBounds="True"
+                        SizeChanged="ChartCanvas_SizeChanged" />
+            </Border>
+
+            <Grid Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="88" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="88" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="边1"
+                           Style="{StaticResource MutedText}"
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Center"
+                           Margin="0,0,8,0" />
+                <ComboBox x:Name="FirstPolarityComboBox"
+                          Grid.Column="1"
+                          DisplayMemberPath="Text"
+                          SelectedValuePath="Value"
+                          SelectionChanged="Parameter_Changed" />
+
+                <TextBlock Grid.Column="2"
+                           Text="边2"
+                           Style="{StaticResource MutedText}"
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Center"
+                           Margin="0,0,8,0" />
+                <ComboBox x:Name="SecondPolarityComboBox"
+                          Grid.Column="3"
+                          DisplayMemberPath="Text"
+                          SelectedValuePath="Value"
+                          SelectionChanged="Parameter_Changed" />
+
+                <TextBlock Grid.Column="4"
+                           Text="比例(mm/px)"
+                           Style="{StaticResource MutedText}"
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Center"
+                           Margin="0,0,8,0" />
+                <TextBox x:Name="ScaleTextBox"
+                         Grid.Column="5"
+                         TextChanged="Parameter_Changed" />
+
+                <TextBlock Grid.Row="1"
+                           Text="阈值"
+                           Style="{StaticResource MutedText}"
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Center"
+                           Margin="0,8,8,0" />
+                <TextBox x:Name="ThresholdTextBox"
+                         Grid.Row="1"
+                         Grid.Column="1"
+                         Margin="0,8,0,0"
+                         TextChanged="Parameter_Changed" />
+
+                <TextBlock Grid.Row="1"
+                           Grid.Column="2"
+                           Text="平滑"
+                           Style="{StaticResource MutedText}"
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Center"
+                           Margin="0,8,8,0" />
+                <TextBox x:Name="SmoothWindowTextBox"
+                         Grid.Row="1"
+                         Grid.Column="3"
+                         Margin="0,8,0,0"
+                         TextChanged="Parameter_Changed" />
+
+                <TextBlock Grid.Row="1"
+                           Grid.Column="4"
+                           Text="边距(px)"
+                           Style="{StaticResource MutedText}"
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Center"
+                           Margin="0,8,8,0" />
+                <TextBox x:Name="MinGapTextBox"
+                         Grid.Row="1"
+                         Grid.Column="5"
+                         Margin="0,8,0,0"
+                         TextChanged="Parameter_Changed" />
+            </Grid>
+
+            <Grid Grid.Row="3"
+                  Margin="0,12,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock x:Name="StatusTextBlock"
+                           Style="{StaticResource MutedText}"
+                           VerticalAlignment="Center"
+                           TextWrapping="Wrap" />
+
+                <Button Grid.Column="1"
+                        Content="应用"
+                        Style="{StaticResource HeaderActionButton}"
+                        Background="{StaticResource SuccessBrush}"
+                        BorderBrush="{StaticResource SuccessBrush}"
+                        MinWidth="76"
+                        Margin="12,0,0,0"
+                        Click="Apply_Click" />
+                <Button Grid.Column="2"
+                        Content="关闭"
+                        Style="{StaticResource HeaderActionButton}"
+                        MinWidth="76"
+                        Margin="8,0,0,0"
+                        Click="Close_Click" />
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

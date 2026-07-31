@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>VideoInferenceDemo</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DirectShowLib.Standard" Version="2.1.0" />
+    <PackageReference Include="NewLife.Core" Version="11.15.2026.501" />
+    <PackageReference Include="OpenCvSharp4" Version="4.11.0.20250507" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="MvCameraControl.Net">
+      <HintPath>..\ThirdParty\CameraHIK\MvCameraControl.Net.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\ThirdParty\CameraHIK\**\*.*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TargetPath>ThirdParty\CameraHIK\%(RecursiveDir)%(Filename)%(Extension)</TargetPath>
+    </Content>
+  </ItemGroup>
+
+</Project>
