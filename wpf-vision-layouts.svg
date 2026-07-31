@@ -1,0 +1,193 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1600" viewBox="0 0 1800 1600">
+  <defs>
+    <style>
+      .bg { fill: #f5f7fa; }
+      .title { font: 700 34px "Microsoft YaHei", "Segoe UI", sans-serif; fill: #1f2937; }
+      .subtitle { font: 400 18px "Microsoft YaHei", "Segoe UI", sans-serif; fill: #64748b; }
+      .card { fill: #ffffff; stroke: #d7dde6; stroke-width: 2; rx: 8; }
+      .panel { fill: #fbfcfe; stroke: #d7dde6; stroke-width: 2; rx: 8; }
+      .dark-panel { fill: #18202b; stroke: #314052; stroke-width: 2; rx: 8; }
+      .dark-panel-2 { fill: #222b38; stroke: #3c4b5f; stroke-width: 2; rx: 8; }
+      .label { font: 600 18px "Microsoft YaHei", "Segoe UI", sans-serif; fill: #253044; }
+      .small { font: 400 14px "Microsoft YaHei", "Segoe UI", sans-serif; fill: #64748b; }
+      .tiny { font: 400 12px "Microsoft YaHei", "Segoe UI", sans-serif; fill: #64748b; }
+      .white-label { font: 600 18px "Microsoft YaHei", "Segoe UI", sans-serif; fill: #e5edf7; }
+      .white-small { font: 400 13px "Microsoft YaHei", "Segoe UI", sans-serif; fill: #aebbd0; }
+      .green { fill: #16a34a; }
+      .red { fill: #dc2626; }
+      .amber { fill: #f59e0b; }
+      .blue { fill: #2563eb; }
+      .cyan { fill: #0891b2; }
+      .line { stroke: #d7dde6; stroke-width: 2; }
+      .dash { stroke: #94a3b8; stroke-width: 2; stroke-dasharray: 8 7; fill: none; }
+      .image-bg { fill: #101820; rx: 8; }
+      .image-grid { stroke: #263445; stroke-width: 1; opacity: .7; }
+      .roi { fill: none; stroke: #22c55e; stroke-width: 5; rx: 6; }
+      .defect { fill: none; stroke: #ef4444; stroke-width: 4; rx: 12; }
+      .pill-text { font: 600 13px "Microsoft YaHei", "Segoe UI", sans-serif; fill: #ffffff; }
+      .mono { font: 400 12px Consolas, monospace; fill: #667085; }
+    </style>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" class="image-grid" fill="none"/>
+    </pattern>
+    <linearGradient id="imageGlow" x1="0" x2="1">
+      <stop offset="0" stop-color="#17202c"/>
+      <stop offset=".55" stop-color="#0f1720"/>
+      <stop offset="1" stop-color="#122031"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1800" height="1600" class="bg"/>
+  <text x="70" y="70" class="title">机器视觉 WPF 首页布局参考</text>
+  <text x="70" y="105" class="subtitle">工业相机采图、外部触发、算法计算、结果输出场景。四种信息架构方向，可按现场角色和调试频率选择。</text>
+
+  <!-- Layout 1 -->
+  <g transform="translate(70,145)">
+    <rect width="795" height="650" class="card"/>
+    <text x="28" y="42" class="label">方案 A：经典三栏工作台</text>
+    <text x="28" y="68" class="small">适合工程调试 + 日常生产，图像最大化，右侧集中结果和命令。</text>
+
+    <rect x="28" y="96" width="739" height="46" class="panel"/>
+    <circle cx="52" cy="119" r="9" class="green"/>
+    <text x="70" y="125" class="small">运行中</text>
+    <rect x="150" y="106" width="68" height="26" rx="6" class="green"/>
+    <text x="169" y="124" class="pill-text">启动</text>
+    <rect x="228" y="106" width="68" height="26" rx="6" class="red"/>
+    <text x="247" y="124" class="pill-text">停止</text>
+    <rect x="306" y="106" width="68" height="26" rx="6" class="amber"/>
+    <text x="325" y="124" class="pill-text">复位</text>
+    <text x="610" y="125" class="tiny">相机：在线 | PLC：连接</text>
+
+    <rect x="28" y="160" width="492" height="345" class="image-bg"/>
+    <rect x="28" y="160" width="492" height="345" fill="url(#grid)" opacity=".55"/>
+    <circle cx="260" cy="332" r="86" fill="#334155" opacity=".55"/>
+    <rect x="152" y="232" width="218" height="136" class="roi"/>
+    <rect x="326" y="286" width="72" height="46" class="defect"/>
+    <text x="46" y="487" class="white-small">图像控件：缩放 / 平移 / ROI / 测量叠加</text>
+
+    <rect x="536" y="160" width="231" height="345" class="panel"/>
+    <text x="554" y="190" class="label">输出结果</text>
+    <rect x="554" y="212" width="195" height="54" rx="8" fill="#dcfce7" stroke="#86efac"/>
+    <text x="574" y="247" style="font:700 26px 'Segoe UI'; fill:#15803d;">OK</text>
+    <text x="554" y="298" class="small">尺寸：12.438 mm</text>
+    <text x="554" y="326" class="small">偏移：+0.021 mm</text>
+    <text x="554" y="354" class="small">耗时：38 ms</text>
+    <line x1="554" y1="376" x2="749" y2="376" class="line"/>
+    <text x="554" y="406" class="label">交互状态</text>
+    <text x="554" y="436" class="small">等待下一次触发</text>
+    <text x="554" y="464" class="small">配方：Cap_Check_A</text>
+
+    <rect x="28" y="520" width="739" height="100" class="panel"/>
+    <text x="46" y="548" class="label">日志</text>
+    <text x="46" y="575" class="mono">14:02:11 TRIG rising edge, capture frame #10291</text>
+    <text x="46" y="596" class="mono">14:02:11 Algorithm finished, result OK, 38 ms</text>
+  </g>
+
+  <!-- Layout 2 -->
+  <g transform="translate(935,145)">
+    <rect width="795" height="650" class="card"/>
+    <text x="28" y="42" class="label">方案 B：左侧导航 + 中心图像 + 右侧检查详情</text>
+    <text x="28" y="68" class="small">适合功能较多的软件：相机、配方、标定、IO、统计分区清晰。</text>
+
+    <rect x="28" y="96" width="86" height="524" class="dark-panel"/>
+    <circle cx="71" cy="134" r="16" class="blue"/>
+    <text x="48" y="180" class="white-small">首页</text>
+    <text x="48" y="226" class="white-small">相机</text>
+    <text x="48" y="272" class="white-small">配方</text>
+    <text x="48" y="318" class="white-small">标定</text>
+    <text x="48" y="364" class="white-small">IO</text>
+    <text x="48" y="410" class="white-small">统计</text>
+
+    <rect x="130" y="96" width="450" height="380" class="image-bg"/>
+    <rect x="130" y="96" width="450" height="380" fill="url(#grid)" opacity=".55"/>
+    <rect x="214" y="184" width="258" height="170" class="roi"/>
+    <path d="M316 150 L358 150 L382 210 L292 210 Z" fill="#475569" opacity=".7"/>
+    <circle cx="394" cy="294" r="35" class="defect"/>
+    <text x="148" y="458" class="white-small">画布工具条可悬浮：适配 / 放大 / ROI / 十字线</text>
+
+    <rect x="596" y="96" width="171" height="380" class="panel"/>
+    <text x="614" y="126" class="label">检查详情</text>
+    <text x="614" y="164" class="small">总结果</text>
+    <rect x="614" y="176" width="131" height="44" rx="8" fill="#fee2e2" stroke="#fca5a5"/>
+    <text x="635" y="206" style="font:700 24px 'Segoe UI'; fill:#b91c1c;">NG</text>
+    <text x="614" y="254" class="small">缺陷数：1</text>
+    <text x="614" y="282" class="small">位置：X 326</text>
+    <text x="614" y="310" class="small">分数：0.82</text>
+    <line x1="614" y1="336" x2="745" y2="336" class="line"/>
+    <text x="614" y="366" class="small">报警：尺寸超差</text>
+    <text x="614" y="394" class="small">动作：剔除</text>
+
+    <rect x="130" y="492" width="637" height="128" class="panel"/>
+    <text x="148" y="522" class="label">底部事件流</text>
+    <text x="148" y="550" class="mono">[WARN] NG output pulse sent to DO3</text>
+    <text x="148" y="572" class="mono">[INFO] Save original and overlay image</text>
+    <text x="148" y="594" class="mono">[INFO] Waiting trigger, queue idle</text>
+  </g>
+
+  <!-- Layout 3 -->
+  <g transform="translate(70,865)">
+    <rect width="795" height="650" class="card"/>
+    <text x="28" y="42" class="label">方案 C：操作员优先大状态屏</text>
+    <text x="28" y="68" class="small">适合产线现场：少菜单、大结果、大状态，降低误操作和阅读负担。</text>
+
+    <rect x="28" y="96" width="739" height="96" class="dark-panel"/>
+    <text x="52" y="136" class="white-label">Line A / Camera 01</text>
+    <text x="52" y="166" class="white-small">外部触发模式 | 在线生产</text>
+    <rect x="576" y="116" width="150" height="50" rx="8" class="green"/>
+    <text x="619" y="149" style="font:700 24px 'Segoe UI'; fill:#fff;">OK</text>
+
+    <rect x="28" y="212" width="520" height="300" class="image-bg"/>
+    <rect x="28" y="212" width="520" height="300" fill="url(#grid)" opacity=".55"/>
+    <circle cx="288" cy="362" r="92" fill="#475569" opacity=".6"/>
+    <rect x="174" y="288" width="230" height="142" class="roi"/>
+
+    <rect x="568" y="212" width="199" height="300" class="panel"/>
+    <text x="586" y="242" class="label">生产状态</text>
+    <text x="586" y="278" class="small">节拍：1.2 s</text>
+    <text x="586" y="306" class="small">良品：12,480</text>
+    <text x="586" y="334" class="small">不良：23</text>
+    <text x="586" y="362" class="small">良率：99.82%</text>
+    <line x1="586" y1="392" x2="745" y2="392" class="line"/>
+    <rect x="586" y="418" width="68" height="36" rx="8" class="green"/>
+    <text x="607" y="442" class="pill-text">启动</text>
+    <rect x="666" y="418" width="68" height="36" rx="8" class="red"/>
+    <text x="687" y="442" class="pill-text">停止</text>
+
+    <rect x="28" y="532" width="360" height="88" class="panel"/>
+    <text x="46" y="562" class="label">当前交互</text>
+    <text x="46" y="590" class="small">等待工件到位，下一次触发后自动采图</text>
+
+    <rect x="408" y="532" width="359" height="88" class="panel"/>
+    <text x="426" y="562" class="label">最近报警</text>
+    <text x="426" y="590" class="small">无未确认报警</text>
+  </g>
+
+  <!-- Layout 4 -->
+  <g transform="translate(935,865)">
+    <rect width="795" height="650" class="card"/>
+    <text x="28" y="42" class="label">方案 D：弹出式命令面板 + 可折叠侧栏</text>
+    <text x="28" y="68" class="small">适合希望首页干净，但又保留完整调试命令的 WPF 应用。</text>
+
+    <rect x="28" y="96" width="739" height="472" fill="url(#imageGlow)" rx="8"/>
+    <rect x="28" y="96" width="739" height="472" fill="url(#grid)" opacity=".45"/>
+    <rect x="238" y="238" width="290" height="180" class="roi"/>
+    <path d="M380 180 A92 92 0 1 1 379 180" fill="#334155" opacity=".58"/>
+    <rect x="52" y="116" width="245" height="42" rx="8" fill="#ffffff" opacity=".92" stroke="#d7dde6"/>
+    <text x="72" y="143" class="small">悬浮图像工具：100% / 适配 / 十字线</text>
+
+    <rect x="536" y="116" width="204" height="250" class="dark-panel-2"/>
+    <text x="556" y="148" class="white-label">命令</text>
+    <rect x="556" y="172" width="70" height="34" rx="7" class="green"/>
+    <text x="576" y="195" class="pill-text">启动</text>
+    <rect x="638" y="172" width="70" height="34" rx="7" class="red"/>
+    <text x="658" y="195" class="pill-text">停止</text>
+    <text x="556" y="236" class="white-small">手动触发</text>
+    <text x="556" y="266" class="white-small">保存当前图像</text>
+    <text x="556" y="296" class="white-small">切换配方</text>
+    <text x="556" y="326" class="white-small">报警确认</text>
+
+    <rect x="28" y="586" width="739" height="34" class="panel"/>
+    <circle cx="50" cy="603" r="8" class="cyan"/>
+    <text x="66" y="608" class="small">状态栏：相机在线 | PLC在线 | 触发队列 0 | 上次耗时 41 ms | 图像 2448x2048</text>
+  </g>
+</svg>
